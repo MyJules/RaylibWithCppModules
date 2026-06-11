@@ -14,5 +14,4 @@ target_link_libraries(app PRIVATE
     raylib_module
 )
 
-enable_std_module(app PUBLIC)
 enable_std_module(args PUBLIC)
