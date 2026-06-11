@@ -3,7 +3,6 @@ include(FetchContent)
 FetchContent_Declare(
 	googletest
 	SOURCE_DIR ${PROJECT_SOURCE_DIR}/vendor/googletest
-	# URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
 )
 FetchContent_MakeAvailable(googletest)
 
@@ -22,7 +21,7 @@ if(NOT _gtest_main_target)
 	message(FATAL_ERROR "Could not find gtest_main target (neither GTest::gtest_main nor gtest_main).")
 endif()
 
-target_link_libraries(unit_tests PRIVATE mylib ${_gtest_main_target})
+target_link_libraries(unit_tests PRIVATE args ${_gtest_main_target})
 
 include(GoogleTest)
 gtest_discover_tests(unit_tests)

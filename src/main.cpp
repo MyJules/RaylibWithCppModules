@@ -8,6 +8,7 @@ int main(int argc, const char* argv[]) {
     constexpr auto window_width = 960;
     constexpr auto window_height = 540;
 
+    raylib::SetConfigFlags(raylib::FLAG_MSAA_4X_HINT);
     raylib::InitWindow(window_width, window_height, "raylib modules");
     raylib::SetTargetFPS(144);
 
