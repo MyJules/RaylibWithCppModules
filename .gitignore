@@ -1,0 +1,83 @@
+# ---- Build outputs (CMake / Ninja / MSBuild) ----
+build/
+build-*/
+out/
+cmake-build-*/
+
+# CMake generated files (in-source builds)
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+Testing/
+_deps/
+install_manifest.txt
+.cmake/
+
+# Ninja
+.ninja_deps
+.ninja_log
+rules.ninja
+
+# Compilation DB / tooling
+compile_commands.json
+compile_flags.txt
+
+# ---- IDEs / editors ----
+.vscode/
+.vs/
+*.VC.db
+*.VC.VC.opendb
+
+# Visual Studio MSBuild outputs
+Debug/
+Release/
+MinSizeRel/
+RelWithDebInfo/
+Win32/
+x64/
+ARM/
+ARM64/
+
+# ---- Binaries / intermediates ----
+*.exe
+*.dll
+*.lib
+*.exp
+*.pdb
+*.ilk
+*.obj
+*.iobj
+*.ipdb
+*.tlog
+*.idb
+*.pch
+*.res
+*.tmp
+
+# ---- Static/dynamic libs (non-Windows too) ----
+*.a
+*.so
+*.dylib
+
+# ---- C++20 modules / compiler caches ----
+*.ifc
+*.bmi
+*.pcm
+*.mod
+*.mpp
+*.gcm
+*.d
+
+# clangd cache
+.cache/
+
+# ---- Logs / misc ----
+*.log
+*.user
+*.suo
+*.swp
+*.swo
+
+# ---- Package managers (optional, but common) ----
+vcpkg_installed/
