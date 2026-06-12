@@ -15,7 +15,7 @@ target_sources(render_layer PUBLIC
     FILES
         RenderLayer.cppm
 )
-target_link_libraries(render_layer PUBLIC
+target_link_libraries(render_layer PRIVATE
     raylib_module
 )
 
