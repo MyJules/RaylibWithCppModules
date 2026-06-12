@@ -6,10 +6,11 @@ import RenderLayer;
 int main(int argc, const char* argv[]) {
     const auto args = args::to_span(argc, argv);
 
-    constexpr auto virtual_width = 320;
-    constexpr auto virtual_height = 240;
+    constexpr auto virtual_width = 1280;
+    constexpr auto virtual_height = 720;
 
     raylib::SetConfigFlags(raylib::FLAG_WINDOW_RESIZABLE); 
+    raylib::SetConfigFlags(raylib::FLAG_VSYNC_HINT);
     raylib::InitWindow(1280, 720, "raylib modules");
 
     auto world_layer = RenderLayer::Layer(virtual_width, virtual_height, 1920, 1080);
@@ -27,17 +28,55 @@ int main(int argc, const char* argv[]) {
         .fovy = 45.0f,
         .projection = raylib::CAMERA_PERSPECTIVE,
     };
+        auto mouse_look_active = false;
 
     raylib::SetTargetFPS(144);
 
     while (!raylib::WindowShouldClose()) {
-    
+        if (raylib::IsMouseButtonPressed(raylib::MOUSE_BUTTON_RIGHT)) {
+            raylib::DisableCursor();
+            mouse_look_active = true;
+        }
+
+        if (raylib::IsMouseButtonReleased(raylib::MOUSE_BUTTON_RIGHT)) {
+            raylib::EnableCursor();
+            mouse_look_active = false;
+        }
+
+        const auto mouse_delta = raylib::GetMouseDelta();
+        raylib::Vector3 camera_pan{};
+        raylib::Vector3 camera_rotation{};
+
+        if (raylib::IsMouseButtonDown(raylib::MOUSE_BUTTON_MIDDLE)) {
+            constexpr auto pan_speed = 0.01f;
+            camera_pan.x = -mouse_delta.x * pan_speed;
+            camera_pan.y = mouse_delta.y * pan_speed;
+        }
+
+        if (mouse_look_active) {
+            constexpr auto rotation_speed = 0.03f;
+            camera_rotation.x = mouse_delta.x * rotation_speed;
+            camera_rotation.y = mouse_delta.y * rotation_speed;
+        }
+
+        if (raylib::IsKeyDown(raylib::KEY_LEFT_CONTROL)) {
+            camera_rotation.y = std::clamp(camera_rotation.y, -0.5f, 0.5f);
+        }
+
+        if (raylib::IsKeyDown(raylib::KEY_LEFT_SHIFT)) {
+            camera_rotation.x = std::clamp(camera_rotation.x, -0.5f, 0.5f);
+        }
+
+        const auto camera_zoom = -raylib::GetMouseWheelMove() * 2.0f;
+        raylib::UpdateCameraPro(&world_camera, camera_pan, camera_rotation, camera_zoom);
+
     {
         raylib::BeginTextureMode(ui_layer.target());
         raylib::ClearBackground(raylib::BLANK);
 
         raylib::DrawText("UI Layer", 40, 50, 64, raylib::RAYWHITE);
         raylib::DrawText(std::format("FPS: {}", raylib::GetFPS()).c_str(), 5, 5, 32, raylib::GREEN);
+        raylib::DrawText("RMB: look  MMB: pan  Wheel: zoom", 40, 120, 32, raylib::LIGHTGRAY);
 
         raylib::EndTextureMode();
     }
