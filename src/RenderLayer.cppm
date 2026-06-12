@@ -48,6 +48,10 @@ Layer::Layer(int texture_width, int texture_height, float camera_width, float ca
     })
 {}
 
+Layer::~Layer() {
+    raylib::UnloadRenderTexture(m_target);
+}
+
 void Layer::begin() const {
     raylib::BeginTextureMode(m_target);
     raylib::BeginMode2D(m_camera);
@@ -91,10 +95,6 @@ void Layer::draw(const raylib::Rectangle& dest_rect) const {
                             {0, 0},
                             0.0f,
                             raylib::WHITE);
-}
-
-Layer::~Layer() {
-    raylib::UnloadRenderTexture(m_target);
 }
 
 }
