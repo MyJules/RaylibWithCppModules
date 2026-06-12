@@ -13,9 +13,6 @@ export namespace RenderLayer {
         Layer(Layer&&) = default;
         Layer& operator=(Layer&&) = default;
 
-        void begin() const;
-        void end() const;
-
         raylib::Rectangle fit_rect(const raylib::Rectangle& bounds) const;
         raylib::Rectangle fit_rect_top_left(const raylib::Rectangle& bounds) const;
 
@@ -50,16 +47,6 @@ Layer::Layer(int texture_width, int texture_height, float camera_width, float ca
 
 Layer::~Layer() {
     raylib::UnloadRenderTexture(m_target);
-}
-
-void Layer::begin() const {
-    raylib::BeginTextureMode(m_target);
-    raylib::BeginMode2D(m_camera);
-}
-
-void Layer::end() const {
-    raylib::EndMode2D();
-    raylib::EndTextureMode();
 }
 
 raylib::Rectangle Layer::fit_rect(const raylib::Rectangle& bounds) const {
